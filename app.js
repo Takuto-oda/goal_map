@@ -46,9 +46,13 @@ app.use(cookieParser());
 app.use(session({
     secret: process.env.SECRET || 'mysecret',  // セッションの暗号化に使用するキー。強力なランダムな文字列にすることを推奨
     resave: false,            // セッションが変更されていなくても再保存するかどうか
-    saveUninitialized: true,  // 未初期化のセッションも保存するかどうか
+    saveUninitialized: false,  // 未初期化のセッションも保存するかどうか
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URL
+        mongoUrl: process.env.MONGO_URL,
+        crypto: {
+            secret: process.env.SECRET,
+        },
+        touchAfter: 24 * 3600
     }),
     cookie: {
         httpOnly: true,
