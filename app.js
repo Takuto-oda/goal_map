@@ -23,6 +23,7 @@ mongoose.connect(dbUrl)
 .catch((err) => { console.log('MongoDB コネクションERROR!!', err); });
 
 const isLoggedIn = function(req, res, next) {
+    console.log('no');
     if (req.isAuthenticated()) {
         return next();
     }
