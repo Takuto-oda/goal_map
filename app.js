@@ -72,7 +72,12 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // プロジェクトのセットアップ
+app.get('/', (req, res) => {
+    res.render('home');
+});
+
 app.get('/goal', isLoggedIn, async(req, res) => {
     const goals = await Goal.find({});
     res.render('schedules/goal', { goals });
