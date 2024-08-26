@@ -175,6 +175,7 @@ app.post('/login', passport.authenticate('local', {
     failureFlash: 'ユーザー名またはパスワードが無効です。',
     keepSessionInfo: true
 }), (req, res) => {
+    console.log('ok');
     req.flash('success', 'ようこそ');
     res.redirect('/goal');
 });
