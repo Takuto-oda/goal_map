@@ -17,7 +17,7 @@ const Milestone = require('./models/milestone');
 
 // MongoDB コネクション
 const mongoose = require('mongoose');
-const dbUrl  = process.env.MONGO_URL || 'mongodb+srv://takuto_oda:In260tXLR5JSIF37@cluster0.jv2vw.mongodb.net/schedule_app?retryWrites=true&w=majority';
+const dbUrl  = process.env.MONGO_URL || 'mongodb+srv://takuto_oda:In260tXLR5JSIF37@cluster0.jv2vw.mongodb.net/schedule_app?retryWrites=true&w=majority&tls=true';
 mongoose.connect(dbUrl)
 .then(() => { console.log('MongoDB コネクションOK!!'); })
 .catch((err) => { console.log('MongoDB コネクションERROR!!', err); });
