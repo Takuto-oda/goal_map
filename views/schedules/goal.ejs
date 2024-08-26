@@ -1,0 +1,9 @@
+<% layout('layouts/boilerplate') %>
+<div class="list-group">
+    <a href="/goal/new" class="list-group-item list-group-item-action mb-3" aria-current="true"><b>＋目標を設定</b></a>
+    <% for(let goal of goals) { %>
+    <div class="mb-3">
+        <b><%= goal.targetDate %></b><a href="/goal/<%= goal._id %>" class="list-group-item list-group-item-action"><%= goal.title %></a>
+    </div>
+    <% } %>
+</div>

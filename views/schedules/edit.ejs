@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <div class="col-6 offset-3">
+        <form action="/goal/<%= goal._id %>?_method=PUT" method="post">
+            <div class="mb-4">
+                <label class="form-label" for="goal">タイトル</label>
+                <input type="text" name="goal[title]" id="goal" class="form-control" placeholder="<%= goal.title %>">
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="description">内容</label>
+                <input type="text" name="goal[description]" id="description" class="form-control" placeholder="<%= goal.description %>">
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="targetDate">目標達成予定日(前回:<%= goal.targetDate %>)</label>
+                <input type="date" name="goal[targetDate]" id="targetDate" class="form-control">
+            </div>
+            <div class="mb-4 d-flex align-items-center">
+                <button class="btn btn-link link-info">更新</button>
+                <a class="link-secondary" href="/goal/<%= goal._id %>">戻る</a>
+            </div>
+        </form>
+    </div>
+</div>
