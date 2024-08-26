@@ -6,6 +6,7 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const passport = require('./passport');
 const bcrypt = require('bcrypt');
@@ -29,10 +30,13 @@ app.use(session({
     secret: process.env.SECRET || 'mysecret',  // セッションの暗号化に使用するキー。強力なランダムな文字列にすることを推奨
     resave: false,            // セッションが変更されていなくても再保存するかどうか
     saveUninitialized: true,  // 未初期化のセッションも保存するかどうか
+    store: MongoStore.create({
+        mongoUrl: dbUrl
+    }),
     cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24, // クッキーの有効期限（ここでは24時間）
-        secure: false,  // `true` にすると HTTPS でのみクッキーを送信（本番環境で有効にする）
+        secure: true,  // `true` にすると HTTPS でのみクッキーを送信（本番環境で有効にする）
     }
 }));
 
