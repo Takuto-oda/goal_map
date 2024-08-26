@@ -57,7 +57,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24, // クッキーの有効期限（ここでは24時間）
-        secure: process.env.NODE_ENV === 'production',  // `true` にすると HTTPS でのみクッキーを送信（本番環境で有効にする）
+        secure: false,  // `true` にすると HTTPS でのみクッキーを送信（本番環境で有効にする）
     }
 }));
 
