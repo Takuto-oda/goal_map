@@ -57,12 +57,12 @@ app.use(session({
     }
 }));
 
-// フラッシュメッセージ設定
-app.use(flash());
-
 // パスポートの初期化
 app.use(passport.initialize());
 app.use(passport.session());
+
+// フラッシュメッセージ設定
+app.use(flash());
 
 // フラッシュメッセージをビューに渡すミドルウェア
 app.use((req, res, next) => {
@@ -172,7 +172,8 @@ app.get('/login', (req, res) => {
 
 app.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
-    failureFlash: 'ユーザー名またはパスワードが無効です。'
+    failureFlash: 'ユーザー名またはパスワードが無効です。',
+    keepSessionInfo: true
 }), (req, res) => {
     req.flash('success', 'ようこそ');
     res.redirect('/goal');
