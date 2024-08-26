@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -14,7 +16,7 @@ const Milestone = require('./models/milestone');
 
 // MongoDB コネクション
 const mongoose = require('mongoose');
-const dbUrl  = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/schedule_app';
+const dbUrl  = process.env.MONGO_URL || 'mongodb+srv://takuto_oda:In260tXLR5JSIF37@cluster0.jv2vw.mongodb.net/schedule_app?retryWrites=true&w=majority';
 mongoose.connect(dbUrl)
 .then(() => { console.log('MongoDB コネクションOK!!'); })
 .catch((err) => { console.log('MongoDB コネクションERROR!!', err); });
@@ -80,7 +82,6 @@ app.get('/goal/new', (req, res) => {
 // 詳細ページ
 app.get('/goal/:id', async(req, res) => {
     const goal = await Goal.findById(req.params.id).populate({ path: 'milestones' });
-    console.log(goal);
     res.render('schedules/show', { goal });
 });
 
