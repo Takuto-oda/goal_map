@@ -22,6 +22,23 @@ mongoose.connect(dbUrl)
 .then(() => { console.log('MongoDB コネクションOK!!'); })
 .catch((err) => { console.log('MongoDB コネクションERROR!!', err); });
 
+const isLoggedIn = function(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    req.flash('error', 'ログインしてください。');
+    res.redirect('/login');
+}
+
+// EJS セットアップ
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+// req.body取得
+app.use(express.urlencoded({extended: true}));
+// method-override
+app.use(methodOverride('_method'));
+
 // クッキーをパースするためのミドルウェア
 app.use(cookieParser());
 
@@ -31,7 +48,7 @@ app.use(session({
     resave: false,            // セッションが変更されていなくても再保存するかどうか
     saveUninitialized: true,  // 未初期化のセッションも保存するかどうか
     store: MongoStore.create({
-        mongoUrl: dbUrl
+        mongoUrl: process.env.MONGO_URL
     }),
     cookie: {
         httpOnly: true,
@@ -46,23 +63,6 @@ app.use(flash());
 // パスポートの初期化
 app.use(passport.initialize());
 app.use(passport.session());
-
-// EJS セットアップ
-app.engine('ejs', ejsMate);
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-// req.body取得
-app.use(express.urlencoded({extended: true}));
-// method-override
-app.use(methodOverride('_method'));
-
-const isLoggedIn = function(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    req.flash('error', 'ログインしてください。');
-    res.redirect('/login');
-}
 
 // フラッシュメッセージをビューに渡すミドルウェア
 app.use((req, res, next) => {
